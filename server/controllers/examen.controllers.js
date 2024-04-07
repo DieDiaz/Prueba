@@ -41,6 +41,24 @@ res.json({
 }
 }
 
+export const createpregunta = async(req, res) => {
+    try{
+    const {pregunta} =req.body
+   const [result] = await pool.query('insert into  preguntas(pregunta) values (?)',
+[
+    pregunta
+]
+);
+res.json({
+    id: result.insertId,
+    pregunta,
+});
+}catch (error){
+    return res.status(500).json({message:error.message});
+}
+}
+
+
 export const updateexams = async(req, res) => {
     try{
     const result = await pool.query('update examenes set ? where id = ?', [req.body, req.params.id]);
